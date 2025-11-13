@@ -1,19 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { deletePost } from "@/lib/api";
 import Button from "@/components/ui/Button";
+import { Post } from "@/types";
 
 // TODO-2: props 타입을 정의하세요. interface 사용하세요.
 
-export default function PostDetail({ post }: any) {
+
+interface PostDetailProps {
+  post: Post;
+}
+
+export default function PostDetail({ post }: PostDetailProps) {
   // useState 타입 정의 예시
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   // 이벤트 타입 정의 예시
-  const handleDelete = async (event: any): Promise<void> => {
+  const handleDelete = async (event: React.MouseEvent<HTMLButtonElement>): Promise<void> => {
     event.preventDefault();
 
     if (!confirm("정말로 이 게시글을 삭제하시겠습니까?")) {

@@ -1,7 +1,20 @@
 "use client";
 
+import React from "react";
+
 // TODO-7: props 타입을 정의하세요. interface 사용하세요.
 // options 는 { value: number; label: string }[] 으로 정의하세요.
+
+interface SelectProps {
+  value: number | string;
+  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  options: { value: number | string; label: string }[];
+  placeholder: string;
+  required: boolean;
+  name: string;
+  className: string;
+  disabled: boolean;
+}
 
 export default function Select({
   value,
@@ -13,7 +26,7 @@ export default function Select({
   className = "",
   disabled = false,
   ...props
-}: any) {
+}: SelectProps) {
   const baseStyles =
     "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white";
 
