@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Select from "@/components/ui/Select";
@@ -12,46 +12,52 @@ interface PostFormProps {
   isLoading?: boolean;
 }
 
+interface PostFormData {
+  title: string;
+  content: string;
+  authorId: number;
+}
+
 export default function PostForm({
   onSubmit,
   initialData = {},
   isLoading = false,
 }: PostFormProps) {
   // useState 타입 정의 예시
-  const [formData, setFormData] = useState<any>({
+  const [formData, setFormData] = useState<PostFormData>({
     title: initialData.title || "",
     content: initialData.content || "",
     authorId: initialData.authorId || 1,
   });
-  const [error, setError] = useState<any>(null);
+  const [error, setError] = useState<string | null>(null);
 
   // useRef 타입 정의 예시
-  const titleInputRef = useRef(null);
-  const contentTextareaRef = useRef(null);
+  const titleInputRef = useRef<HTMLInputElement>(null);
+  const contentTextareaRef = useRef<HTMLTextAreaElement>(null);
 
   // TODO-1 : 아래 4개의 이벤트 핸들러 함수의 이벤트 타입을 각각 정의하세요
-  const handleTitleChange = (event: any): void => {
-    setFormData((prev: any) => ({
+  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setFormData((prev: PostFormData) => ({
       ...prev,
       title: event.target.value,
     }));
   };
 
-  const handleContentChange = (event: any): void => {
-    setFormData((prev: any) => ({
+  const handleContentChange = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
+    setFormData((prev: PostFormData) => ({
       ...prev,
       content: event.target.value,
     }));
   };
 
-  const handleAuthorChange = (event: any): void => {
-    setFormData((prev: any) => ({
+  const handleAuthorChange = (event: React.ChangeEvent<HTMLSelectElement>): void => {
+    setFormData((prev: PostFormData) => ({
       ...prev,
       authorId: Number(event.target.value),
     }));
   };
 
-  const handleSubmit = async (event: any): Promise<void> => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
     setError(null);
 
