@@ -34,7 +34,7 @@ export default function EditPostPage() {
     loadPost();
   }, [id]);
 
-  const handleSubmit = async (data: never): Promise<void> => {
+  const handleSubmit = async (data: Omit<Post, "id">): Promise<void> => {
     if (!post) return;
 
     setIsSubmitting(true);

@@ -9,7 +9,7 @@ interface PostPageProps {
 }
 
 export default async function PostPage({ params }: PostPageProps) {
-  const { id } = await params;
+  const { id } = params;
   if (!id) {
     notFound();
   }
