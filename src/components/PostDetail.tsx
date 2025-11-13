@@ -20,7 +20,7 @@ export default function PostDetail({ post }: PostDetailProps) {
     mutate: deletePostMutation,
     isPending: isDeleting,
     error,
-  } = useMutation({
+  } = useMutation<void, Error, Post['id']>({
     mutationFn: deletePost,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["posts"] });

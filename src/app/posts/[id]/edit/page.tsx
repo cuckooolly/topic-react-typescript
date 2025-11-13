@@ -30,7 +30,7 @@ export default function EditPostPage() {
       }
     };
 
-    loadPost();
+    void loadPost();
   }, [id]);
 
   const handleSubmit = async (data: Omit<Post, "id">): Promise<void> => {
@@ -41,7 +41,7 @@ export default function EditPostPage() {
       await updatePost(post.id, data);
       // 수정된 게시글 상세 페이지로 이동
       router.push(`/posts/${post.id}`);
-    } catch (error) {
+    } catch (error: unknown) {
       setIsSubmitting(false);
       // 에러는 PostForm 컴포넌트에서 처리
       throw error;

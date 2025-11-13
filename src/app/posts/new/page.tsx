@@ -5,6 +5,7 @@ import PostForm from "@/components/PostForm";
 import { createPost } from "@/lib/api";
 import { Post } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {DefaultError} from "@tanstack/query-core";
 
 export default function NewPostPage() {
   const router = useRouter();
@@ -15,7 +16,7 @@ export default function NewPostPage() {
     mutate: createPostMutation,
     isPending,
     error,
-  } = useMutation({
+  } = useMutation<Omit<Post, "id">, DefaultError, Omit<Post, "id">>({
     mutationFn: createPost,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["posts"] });
