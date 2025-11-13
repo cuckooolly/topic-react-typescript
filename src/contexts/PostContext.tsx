@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useRef, useEffect, useState } from "react";
+import React, { createContext, useContext, useRef, useEffect, useState } from "react";
 import { Post } from "@/types";
 
 // TODO-1: PostContextType 을 정의하고 적용하세요
@@ -8,16 +8,26 @@ import { Post } from "@/types";
 // - createContext<any> 에서 any 대신 PostContextType | undefined 을 넣으세요
 // - setPosts, setLoading 과 같은 setState 함수의 타입은 useState 실행한 곳의 setPosts 에 마우스오버해서 타입확인해서 복사 붙여넣으세요
 
-const PostContext = createContext<any>(undefined);
+interface PostContextType {
+  posts: Post[];
+  setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
+  loading: boolean;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  error: string | null;
+  setError: React.Dispatch<React.SetStateAction<string | null>>;
+  refreshPosts: () => Promise<void>;
+}
+
+const PostContext = createContext<PostContextType | undefined>(undefined);
 
 // TODO-2: PostProvider 의 props 타입을 정의하세요
-export function PostProvider({ children }: any) {
+export function PostProvider({ children }: { children: React.ReactNode }) {
   // TODO-3: useState 의 초기 상태값의 타입과 useRef 의 타입을 제네릭으로 정의하세요
-  const [posts, setPosts] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<any>(null);
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const mountedRef = useRef(false);
+  const mountedRef = useRef<boolean>(false);
 
   useEffect(() => {
     mountedRef.current = true;
