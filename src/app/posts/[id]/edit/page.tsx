@@ -30,7 +30,7 @@ export default function EditPostPage() {
       }
     };
 
-    loadPost();
+    void loadPost();
   }, [id]);
 
   const handleSubmit = async (data: Omit<Post, "id">): Promise<void> => {
